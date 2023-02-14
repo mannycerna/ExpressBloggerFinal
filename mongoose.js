@@ -7,10 +7,10 @@ const mongoose = require("mongoose");
 mongoose.set('strictQuery', false);
 
 // Define the database URL to connect to.
-const mongoDB = "mongodb://127.0.0.1/my_database";
+const mongoDB = process.env.ATLAS_URI;
 
 // Wait for database to connect, logging an error if there is a problem 
-main().catch(err => console.log(err));
+// main().catch(err => console.log(err));
 async function mongooseConnect() {
   await mongoose.connect(mongoDB);
 }

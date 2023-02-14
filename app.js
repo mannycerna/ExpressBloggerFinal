@@ -1,17 +1,25 @@
 var createError = require('http-errors');
+
+const PORT = process.env.PORT || 3001;
+
+
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 //load environment variables from .env (.env is the default file)
+
 require("dotenv").config();
+const {mongooseConnect} = require('./mongoose.js');
+mongooseConnect();
 
 //register routes.
 //NOTE: notice how there is .js after index, this is because
 // we exported the module as index. 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var blogsRouter = require('./routes/blogs');
+// var blogsRouter = require('./routes/blogs');
 
 //connecting to mongo db 
 // var { mongoConnect } = require('./mongo.js');
@@ -53,5 +61,11 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`);
+});
+
 
 module.exports = app;
