@@ -14,8 +14,8 @@ var usersRouter = require('./routes/users');
 var blogsRouter = require('./routes/blogs');
 
 //connecting to mongo db 
-var { mongoConnect } = require('./mongo.js');
-mongoConnect();
+// var { mongoConnect } = require('./mongo.js');
+// mongoConnect();
 
 var app = express();
 
@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //register routes 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/blogs', blogsRouter);
+// app.use('/blogs', blogsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
