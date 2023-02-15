@@ -12,9 +12,12 @@ const mongoDB = process.env.ATLAS_URI;
 // Wait for database to connect, logging an error if there is a problem 
 // main().catch(err => console.log(err));
 async function mongooseConnect() {
-  await mongoose.connect(mongoDB);
-}
-
+  try {
+    await mongoose.connect(mongoDB, {dbName: process.env.DATABASE});
+} catch (error) {
+        throw error;
+    }
+};
 module.exports = {
     mongooseConnect
-}
+};
