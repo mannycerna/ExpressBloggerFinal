@@ -1,13 +1,14 @@
-var createError = require('http-errors');
+const createError = require('http-errors');
 
 const PORT = process.env.PORT || 3001;
 
 
 
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
 
 
 //load environment variables from .env (.env is the default file)
@@ -19,15 +20,15 @@ mongooseConnect();
 //register routes.
 //NOTE: notice how there is .js after index, this is because
 // we exported the module as index. 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var blogsRouter = require('./routes/blogs');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const blogsRouter = require('./routes/blogs');
 
 //connecting to mongo db 
-// var { mongoConnect } = require('./mongo.js');
+// const { mongoConnect } = require('./mongo.js');
 // mongoConnect();
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,15 +43,23 @@ app.use(cookieParser());
 //allows use to load static files from public 
 app.use(express.static(path.join(__dirname, 'public')));
 
+//use CORS
+app.use(cors());
 
 //register routes 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/blogs', blogsRouter);
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+
+// Return the client
+app.get('/blogs*', (_, res) => {
+  res.sendFile(path.join(__dirname, 'public') + '/index.html');
 });
 
 // error handler
