@@ -5,7 +5,6 @@ var router = express.Router();
 
 // const Blog = require('../models/Blogs'); //refactored to line below (blogsController)
 const blogsController = require('../controllers/blogsController');
-
 router.get('/all', blogsController.getAllBlogs); 
 router.post("/create-one",  blogsController.createOneBlog);
 router.get("/getOneBlog/:title", blogsController.getOneBlog);
